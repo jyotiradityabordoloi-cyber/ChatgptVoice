@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Teardown · Why aren’t India’s students talking to ChatGPT?</title>
+  <meta name="description" content="A product teardown of ChatGPT voice input for Indian college students, and a fix: a live, editable transcript.">
+  <meta property="og:title" content="Why aren’t India’s students talking to ChatGPT?">
+  <meta property="og:description" content="ChatGPT voice teardown: everyone tried voice, no one kept it. The fix: let students correct it before it’s sent.">
+  <meta name="theme-color" content="#0d0d0d">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23ececec'/%3E%3Crect x='12.5' y='7' width='7' height='12' rx='3.5' fill='%230d0d0d'/%3E%3Cpath d='M9.5 15.5a6.5 6.5 0 0 0 13 0M16 22v3.5' stroke='%230d0d0d' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<header class="top dark">
+  <div class="wrap top-in">
+    <a class="logo" href="#top">
+      <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></span>
+      Voice, fixed <span class="sub">· a ChatGPT teardown</span>
+    </a>
+    <nav class="top-nav" aria-label="Sections">
+      <a href="#context">Context</a>
+      <a href="#teardown">Teardown</a>
+      <a href="#findings">Findings</a>
+      <a href="#solution">Solution</a>
+      <a href="#documents">Read more</a>
+    </nav>
+    <a class="btn btn-light" href="docs/milestone-3-prd.pdf" download>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M6 10l6 6 6-6M4 20h16"/></svg>Download the PRD
+    </a>
+  </div>
+  <div class="progress"><i id="prog"></i></div>
+</header>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="band dark hero">
+  <div class="wrap">
+    <p class="kicker rv">Product teardown · ChatGPT Voice · India · 2026</p>
+    <h1 class="rv">Why aren’t India’s students talking to ChatGPT?</h1>
+    <p class="deck rv">India has ChatGPT’s largest student base, and they still type. A teardown of ChatGPT’s voice input, and a fix.</p>
+
+    <div class="composer-mock rv" aria-hidden="true">
+      <div class="say"><b>Stuck on a doubt? Just say it.</b><i class="caret"></i></div>
+      <span class="round mic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></span>
+      <span class="round wv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 10v4M10 7v10M14 9v6M18 11v2"/></svg></span>
+    </div>
+
+    <div class="trio rv">
+      <div><small>What I tore down</small><p>ChatGPT’s mic-to-text dictation on mobile, for Indian college students</p></div>
+      <div><small>What I found</small><p>Everyone tried voice. No one kept it: fixing errors costs more than typing</p></div>
+      <div><small>What I propose</small><p>A live, editable transcript: fix it before it reaches the model</p></div>
+    </div>
+
+    <div class="cta rv">
+      <a class="btn btn-light" href="#context">Read the teardown</a>
+      <a class="btn btn-ghost" href="#solution">Jump to the solution</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 01 CONTEXT ============ -->
+<section class="band" id="context">
+  <div class="wrap">
+    <div class="head">
+      <p class="kicker rv">01 · Context</p>
+      <h2 class="rv">Indians already talk to their phones. Just not to ChatGPT.</h2>
+      <p class="lede rv">Voice notes, Google Assistant and Alexa have made “talk instead of type” normal for hundreds of millions of people. Users don’t need to be taught voice. They need a reason to use it inside ChatGPT.</p>
+    </div>
+
+    <div class="statrow rv">
+      <div class="stat"><div class="v">536M</div><div class="l">Indians use WhatsApp, where voice notes are a default</div><div class="s">DataReportal · 2025</div></div>
+      <div class="stat"><div class="v">~52%</div><div class="l">of AI app downloads in India go to Gemini, vs ~32% for ChatGPT</div><div class="s">App-store tracking · 2026</div></div>
+      <div class="stat"><div class="v">100M</div><div class="l">weekly ChatGPT users in India, nearly half under 24</div><div class="s">OpenAI · 2025–26</div></div>
+      <div class="stat g"><div class="v">45M</div><div class="l">college students in India: the biggest voice upside</div><div class="s">AISHE 2023-24</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 TEARDOWN ============ -->
+<section class="band dark" id="teardown">
+  <div class="wrap">
+    <div class="head">
+      <p class="kicker rv">02 · Teardown · What happens when you tap the mic</p>
+      <h2 class="rv">The misheard question goes straight to the model</h2>
+      <p class="lede rv">Two steps, and no chance to fix anything in between.</p>
+    </div>
+
+    <div class="split">
+      <div class="screens two rv" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+        <figure class="shot" style="margin:0">
+          <div class="phone" aria-label="Mockup: recording with nothing on screen">
+            <div class="bar-top">ChatGPT <span>Physics doubts</span></div>
+            <div class="body"><div class="empty">Nothing appears<br>while you speak</div></div>
+            <div class="comp">
+              <div class="txt"><div class="rec"><span class="dot"></span><span class="wave"><i style="height:5px"></i><i style="height:11px"></i><i style="height:15px"></i><i style="height:8px"></i><i style="height:13px"></i><i style="height:6px"></i><i style="height:14px"></i><i style="height:9px"></i><i style="height:4px"></i><i style="height:12px"></i></span>0:04</div></div>
+              <span class="btn-r stop"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/></svg></span>
+            </div>
+          </div>
+          <figcaption><b><span class="pin">1</span> Speak</b>Nothing appears until you stop. No sign it’s hearing your accent.</figcaption>
+        </figure>
+        <figure class="shot" style="margin:0">
+          <div class="phone" aria-label="Mockup: misheard question auto-sent">
+            <div class="bar-top">ChatGPT <span>Physics doubts</span></div>
+            <div class="body">
+              <div class="u">Explain why <u style="text-decoration-color:#ff6b6b">a diabetic</u> process has no heat transfer, like in HC Verma chapter 12</div>
+              <div class="a wrong">Diabetes is a chronic condition in which the body can’t regulate blood sugar. “Diabetic process” isn’t a standard physics term, but if you mean how insulin…</div>
+            </div>
+            <div class="comp"><div class="txt ph">Ask anything</div><span class="btn-r off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></span></div>
+            <div class="hint red">Student retypes the whole prompt</div>
+          </div>
+          <figcaption><b><span class="pin">2</span> Auto-send</b>“Adiabatic” becomes “a diabetic”, and it’s sent before the student can fix it.</figcaption>
+        </figure>
+      </div>
+
+      <div>
+        <span class="label rv">Where it breaks for Indian students</span>
+        <div class="grid rv" style="gap:10px;margin-bottom:28px">
+          <div class="card"><h4>No live feedback</h4><p>Long or accented questions get abandoned mid-sentence.</p></div>
+          <div class="card"><h4>No review before send</h4><p>A transcription error is passed on as intent. The model answers the wrong question, confidently.</p></div>
+          <div class="card"><h4>Weak on Hinglish, names, numbers</h4><p>The students voice helps most are the ones it transcribes worst.</p></div>
+        </div>
+        <span class="label rv">Others already solved it</span>
+        <div class="card rv"><p style="color:var(--ink)"><strong>Claude</strong> shows a live transcript you can edit before sending. <strong>WhatsApp</strong> lets you pause and cancel. <strong>YouTube</strong> clearly shows it’s listening. ChatGPT does none of these.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 FINDINGS ============ -->
+<section class="band" id="findings">
+  <div class="wrap">
+    <div class="head">
+      <p class="kicker rv">03 · What students told us</p>
+      <h2 class="rv">Not a discovery problem. A correction-cost problem.</h2>
+      <p class="lede rv">I surveyed 10 college students who study with ChatGPT and interviewed 2. An early signal, but a consistent one.</p>
+    </div>
+
+    <div class="callout rv" style="margin-bottom:48px"><p class="big-quote">All 10 say voice suits long questions. <em>All 10 typed their last one.</em></p></div>
+
+    <div class="split">
+      <div class="rv">
+        <span class="label">Voice adoption, out of 10 students</span>
+        <div class="bars">
+          <div class="bar"><span>Knew about voice</span><div class="track"><div class="fill" style="--w:1"></div></div><span class="v">10</span></div>
+          <div class="bar"><span>Tried it</span><div class="track"><div class="fill" style="--w:1"></div></div><span class="v">10</span></div>
+          <div class="bar"><span>Use it sometimes</span><div class="track"><div class="fill" style="--w:.6"></div></div><span class="v">6</span></div>
+          <div class="bar"><span>Use it often</span><div class="track"><div class="fill grey" style="--w:0"></div></div><span class="v">0</span></div>
+          <div class="bar"><span>Spoke last question</span><div class="track"><div class="fill grey" style="--w:0"></div></div><span class="v">0</span></div>
+        </div>
+      </div>
+      <div class="rv">
+        <span class="label">Why they went back to typing</span>
+        <div class="grid" style="gap:10px">
+          <div class="card"><h4><span class="num">10/10</span>Typing feels faster</h4><p>Only because of the checking and fixing after speaking.</p></div>
+          <div class="card"><h4><span class="num">7/10</span>Worried about their accent</h4><p>Fear of being misheard stops them before any error happens.</p></div>
+          <div class="card"><h4><span class="num">6/10</span>Awkward near others</h4><p>Hostel rooms and libraries make talking aloud hard.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <blockquote class="rv" style="margin-top:48px;max-width:640px">“If I have to correct what I said, typing feels easier.”<cite>Anmol, arts student, Jorhat</cite></blockquote>
+  </div>
+</section>
+
+<!-- ============ 04 PROBLEM ============ -->
+<section class="band alt" id="problem">
+  <div class="wrap">
+    <p class="kicker rv">04 · The problem worth solving</p>
+    <div class="hmw rv" style="margin-top:0"><small>HOW MIGHT WE</small><p>…let students fix what voice got wrong, before it reaches the model, so speaking a doubt is faster than typing it?</p></div>
+  </div>
+</section>
+
+<!-- ============ 05 SOLUTION ============ -->
+<section class="band dark" id="solution">
+  <div class="wrap">
+    <div class="head">
+      <p class="kicker rv">05 · The solution</p>
+      <h2 class="rv">A live, editable transcript</h2>
+      <p class="lede rv">Words appear as the student speaks. Stop opens a draft instead of sending. Likely-misheard words are underlined and fixed in one tap. <strong style="color:var(--ink)">Send is the only way a question leaves the draft.</strong></p>
+    </div>
+
+    <div class="rv" style="margin-bottom:48px">
+      <p class="chain-label">Today</p>
+      <div class="chain"><span>Tap mic</span><i>→</i><span>Speak (blank screen)</span><i>→</i><span class="bad">Auto-send</span><i>→</i><span class="bad">Wrong answer</span><i>→</i><span class="bad">Retype</span></div>
+      <p class="chain-label" style="margin-top:18px">Proposed</p>
+      <div class="chain"><span>Tap mic</span><i>→</i><span class="good">Live words</span><i>→</i><span class="good">Review draft</span><i>→</i><span class="good">One-tap fix</span><i>→</i><span>Send</span><i>→</i><span>Right answer</span></div>
+    </div>
+
+    <div class="screens">
+      <figure class="shot rv" style="margin:0">
+        <div class="phone" aria-label="Mockup: words appear live">
+          <div class="bar-top">ChatGPT <span>Physics doubts</span></div>
+          <div class="body"></div>
+          <div class="comp"><div class="txt">Explain why a diabetic process has no heat <span class="grey">transfer, like</span></div><span class="btn-r stop"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/></svg></span></div>
+          <div class="hint ok">Listening… grey words turn white once final</div>
+        </div>
+        <figcaption><b><span class="pin">1</span> Speak</b>Words appear live, so students see it’s hearing them.</figcaption>
+      </figure>
+      <figure class="shot rv" style="margin:0">
+        <div class="phone" aria-label="Mockup: review the draft">
+          <div class="bar-top">ChatGPT <span>Physics doubts</span></div>
+          <div class="body"></div>
+          <div class="comp"><div class="txt">Explain why <span class="ul">a diabetic</span> process has no heat transfer, like in <span class="nm">HC Verma</span> chapter 12</div><span class="btn-r"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></span></div>
+          <div class="hint">1 word to check · tap it, or send as is</div>
+        </div>
+        <figcaption><b><span class="pin">2</span> Review</b>Stop opens a draft. Only the risky words are underlined.</figcaption>
+      </figure>
+      <figure class="shot rv" style="margin:0">
+        <div class="phone" aria-label="Mockup: one-tap fix">
+          <div class="bar-top">ChatGPT <span>Physics doubts</span></div>
+          <div class="body"></div>
+          <div class="comp">
+            <div class="pop"><div>Did you mean</div><div class="s">an adiabatic <small>physics chat</small></div><div>Keep “a diabetic”</div><div>Re-say this word</div><div>Type it</div></div>
+            <div class="txt">Explain why <span class="ul">a diabetic</span> process has no heat transfer, like in HC Verma chapter 12</div><span class="btn-r"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></span>
+          </div>
+          <div class="hint">&nbsp;</div>
+        </div>
+        <figcaption><b><span class="pin">3</span> Fix</b>One tap instead of a retype. Suggestions use the chat’s context.</figcaption>
+      </figure>
+      <figure class="shot rv" style="margin:0">
+        <div class="phone" aria-label="Mockup: right question sent">
+          <div class="bar-top">ChatGPT <span>Physics doubts</span></div>
+          <div class="body">
+            <div class="u">Explain why an adiabatic process has no heat transfer, like in HC Verma chapter 12</div>
+            <div class="a">In an <b>adiabatic</b> process the system exchanges no heat with its surroundings (Q = 0), so by the first law ΔU = −W…</div>
+            <div class="chipline">Learned: a diabetic → an adiabatic · Undo</div>
+          </div>
+          <div class="comp"><div class="txt ph">Ask anything</div><span class="btn-r off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></span></div>
+        </div>
+        <figcaption><b><span class="pin">4</span> Send</b>Right question, right answer. The fix is remembered, with Undo.</figcaption>
+      </figure>
+      <figure class="shot rv" style="margin:0">
+        <div class="phone" aria-label="Mockup: Hinglish and noise edge case">
+          <div class="bar-top">ChatGPT <span>Physics doubts</span></div>
+          <div class="body" style="justify-content:flex-end">
+            <div class="banner">Sounds like Hinglish. Switch mode? <b>Switch</b></div>
+            <div class="banner warn">Noisy room. Words may be missed. <b>Type instead</b></div>
+          </div>
+          <div class="comp" style="margin-top:8px"><div class="txt">Newton <span class="ul">car</span> third law <span class="ul">some job</span> with an example</div><span class="btn-r"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></span></div>
+          <div class="hint">2 words to check</div>
+        </div>
+        <figcaption><b><span class="pin">5</span> Hinglish &amp; noise</b>Hindi words suggest Hinglish mode; a noisy room offers “Type instead”.</figcaption>
+      </figure>
+    </div>
+
+    <div class="grid g3" style="margin-top:56px">
+      <div class="card rv"><span class="label">North star</span><p style="color:var(--ink);font-size:17px"><strong>+20%</strong> weekly share of prompts sent by voice, among Indian college students</p></div>
+      <div class="card rv"><span class="label">Quality check</span><p style="color:var(--ink);font-size:17px"><strong>−50%</strong> wrong questions sent by voice</p></div>
+      <div class="card rv"><span class="label">How we’ll know</span><p style="color:var(--ink);font-size:17px">4-week 50/50 A/B test with Indian mobile users</p></div>
+    </div>
+    <p class="src note rv" style="color:#8e8e8e">Phone screens are simplified recreations; the annotated wireframes are in Figma. Metrics, experiment, rollout and risks are in the PRD.</p>
+  </div>
+</section>
+
+<!-- ============ TAKEAWAY ============ -->
+<section class="band dark takeaway" style="border-top:1px solid #2a2a2a">
+  <div class="wrap">
+    <p class="kicker rv">The takeaway</p>
+    <p class="big-quote rv">Students don’t need to be taught voice. They need to <em>fix it before it’s sent.</em></p>
+  </div>
+</section>
+
+<!-- ============ READ MORE ============ -->
+<section class="band alt" id="documents">
+  <div class="wrap">
+    <div class="head">
+      <p class="kicker rv">Read more</p>
+      <h2 class="rv">The full PRD, research and prototype</h2>
+      <p class="lede rv">This page is the short version. Sizing, personas, RICE, metrics, experiment design, rollout and risks are in the documents.</p>
+    </div>
+    <div class="docs">
+      <div class="card doc rv">
+        <span class="ic" style="background:#10a37f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></span>
+        <div><span class="label">Milestone 3 · PRD</span><h4>Live, Editable Transcript for ChatGPT Voice (India)</h4></div>
+        <p class="muted small">Goals and metrics, RICE, solution logic, experiment, rollout, risks and decisions.</p>
+        <div class="acts"><a class="btn btn-dark btn-sm" href="docs/milestone-3-prd.pdf" download>Download PDF</a><a class="btn btn-ghost btn-sm" href="docs/milestone-3-prd.pdf" target="_blank" rel="noopener">Open</a></div>
+      </div>
+      <div class="card doc rv">
+        <span class="ic" style="background:#2f6fd6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></span>
+        <div><span class="label">Milestone 2 · Research</span><h4>Segment, user research &amp; problem canvas</h4></div>
+        <p class="muted small">Segment sizing, survey, interviews, hypotheses and the problem framing canvas.</p>
+        <div class="acts"><a class="btn btn-dark btn-sm" href="docs/milestone-2-research.pdf" download>Download PDF</a><a class="btn btn-ghost btn-sm" href="docs/milestone-2-research.pdf" target="_blank" rel="noopener">Open</a></div>
+      </div>
+      <div class="card doc rv">
+        <span class="ic" style="background:#8a5cd6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></span>
+        <div><span class="label">Milestone 1 · Deck</span><h4>Voice landscape, UX teardown &amp; KPI tree</h4></div>
+        <p class="muted small">India voice-tech landscape, anatomy of ChatGPT voice input, and the KPI tree.</p>
+        <div class="acts"><a class="btn btn-dark btn-sm" href="docs/voice-adoption-deck.pdf" download>Download PDF</a><a class="btn btn-ghost btn-sm" href="docs/voice-adoption-deck.pdf" target="_blank" rel="noopener">Open</a></div>
+      </div>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <a class="card doc rv" href="https://protochatgpt.netlify.app/" target="_blank" rel="noopener" style="text-decoration:none">
+        <span class="label">Working prototype ↗</span>
+        <p style="color:var(--ink)">Try the live transcript with real speech recognition, AI word checks, and a toggle to compare with today’s flow.</p>
+      </a>
+      <a class="card doc rv" href="https://www.figma.com/design/u7Hsj7LgJUx6V7YCOfWZeW" target="_blank" rel="noopener" style="text-decoration:none">
+        <span class="label">Figma wireframes ↗</span>
+        <p style="color:var(--ink)">5 annotated screens: speak, review, fix, send, and the noise &amp; Hinglish edge case.</p>
+      </a>
+    </div>
+    <p class="src rv">Pilot survey of 10 college students and 2 interviews (Sep 2026) · OpenAI (India users, 2025–26) · AISHE 2023-24 · DataReportal 2025 · industry app-store tracking (2026).</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Case study by Jyotiraditya Bordoloi · 2026</span>
+    <span>Independent case study, not affiliated with OpenAI. <a href="#top">Back to top ↑</a></span>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
